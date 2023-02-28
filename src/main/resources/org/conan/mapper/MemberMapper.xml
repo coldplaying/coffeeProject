@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.conan.mapper.MemberMapper">
+	
+	<!-- insert문 -->
+	<insert id="memberJoin">
+		insert into tbl_member(userId, userPwd, userName, phoneNo, email, address1, address2, regDate) values (#{userId}, #{userPwd}, #{userName}, #{phoneNo}, #{email}, #{address1}, #{address2}, now())
+	</insert>
+	
+	<select id="idCheck" resultType="int">
+		select count(*) from tbl_member where userId = #{userId}
+	</select>
+	
+	<select id="memberLogin" resultType="org.conan.domain.MemberVO">
+		select * from tbl_member where userId=#{userId}
+	</select>
+	
+	<update id="memberModify">
+		update tbl_member set userPwd=#{userPwd}, email=#{email}, phoneNo=#{phoneNo}, address1 = #{address1}, address2 = #{address2} where userNo = #{userNo}
+	</update>
+	
+	<delete id="memberDelete">
+		delete from tbl_member where userId=#{userId}
+	</delete>
+</mapper>

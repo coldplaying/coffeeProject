@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="org.conan.mapper.OrderMapper">
+  <!-- 주문 상품 정보 -->
+	<select id="getGoodsInfo" resultType="org.conan.domain.OrderPageItemDTO">
+	
+		select gdsNum, gdsName, gdsPrice
+		from tbl_goods where gdsNum = #{gdsNum}	
+	
+	</select>
+	
+	<select id="getOrderInfo" resultType="org.conan.domain.OrderItemDTO">
+	
+		select gdsNum, gdsPrice
+		from tbl_goods where gdsNum = #{gdsNum}
+	
+	</select>
+	
+	<!-- 주문 테이블 등록 -->
+	<insert id="enrollOrder">
+	
+		insert into tbl_order(orderId, addressName, userId, address1, address2, , orderState, deliveryCost)
+    	values(#{orderId},#{addressName}, #{userId}, #{address1}, #{address2}, #{userAddr3}, '배송준비', #{deliveryCost})
+	
+	</insert>
+	
+	<!-- 주문 아이템 테이블 등록 -->
+	<insert id="enrollOrderItem">
+	
+		insert into tbl_orderItem(orderId, gdsNum, gdsCount, gdsPrice)
+		values(#{orderId}, #{gdsNum}, #{gdsCount}, #{gdsPrice})
+	
+	</insert>
+	
+	<!-- 주문 재고 차감 -->
+	<update id="deductStock">
+	
+		update tbl_goods set gdsStock = #{gdsStock} where gdsNum = #{gdsNum}
+	
+	</update>
+
+
+  </mapper>

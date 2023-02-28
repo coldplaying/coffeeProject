@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.conan.mapper.CartMapper">
+
+<insert id="addCart">
+	
+		insert into tbl_cart(userId, gdsNum, gdsStock)
+		values(#{userId}, #{gdsNum}, #{gdsStock}) 
+	
+	</insert>
+	
+	
+	<!-- 카트 삭제 -->
+	<delete id="deleteCart">
+	
+		delete from tbl_cart where cartId = #{cartId}
+	
+	</delete>
+	
+	<!-- 카트 수량 수정 -->
+	<update id="modifyCount">
+	
+		update tbl_cart set gdsStock=#{gdsStock} where cartId = #{cartId}
+	
+	</update>
+	
+	
+	<!-- 카트 목록 -->
+	<select id="getCart" resultType="org.conan.domain.CartDTO">
+	
+		select a.cartId, a.userId, a.gdsNum, a.gdsStock, b.gdsPrice
+		from tbl_cart a left outer join tbl_goods b on a.gdsNum = b.gdsNum
+		where userId = #{userId}	
+	
+	</select>
+	
+	<!-- 카트 확인 -->
+	<select id="checkCart" resultType="org.conan.domain.CartDTO">
+	
+		select * from tbl_cart 
+		where userId = #{userId} and gdsNum = #{gdsNum}
+	
+	</select>
+
+</mapper>
